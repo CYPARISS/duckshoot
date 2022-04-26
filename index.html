@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+    .box{
+        
+        background-size: 100% 100%;
+        width: 200px;
+        height: 200px;
+        position: absolute;    
+    }
+
+    .btn{
+        margin-left: 800px;
+        border: 4px double yellow;
+        background-color: red;
+        color: yellow;
+
+    }
+
+    </style>
+</head>
+<body style="background-image: url(12.jpg); background-size: 100%;">
+    <button class="btn">START SUPPRESSION</button>
+    <h1 style="color: yellow; text-shadow: 2px 0px 3px red;">СЧЁТЧИК КЛИПОТ:<span class="score1">0</span></h1>
+    <script>
+        let score1 = document.querySelector('.score1');
+        let btn = document.querySelector('.btn');
+        let int1;
+        btn.onclick = function(){
+            int1 = setInterval(createElem , 500);
+            setTimeout(finish, 10000); 
+        }
+        function getRandom(arg){
+            let rand = Math.random() * arg;
+            let round = Math.round(rand);
+            return round;
+        }
+
+        let y = [100,400,700]
+        let images = ['1.png','2.png','3.png']
+        let score = 0;
+
+        function createElem(){
+
+            let elem = document.createElement('div');
+            document.body.appendChild(elem);
+            elem.classList.add('box');
+            elem.style.left = getRandom(1600) + 'px';
+            elem.style.top = y[getRandom(2)] + 'px';
+
+            let random_img = getRandom(2);
+            elem.style.backgroundImage = 'url('+images[random_img]+ ')';
+
+            if(random_img == 0){
+                elem.name = 'norm'; 
+            }else if(random_img == 1){
+                elem.name = 'bad';
+            }else if(random_img == 2){
+                elem.name = 'good';
+            }
+
+            
+
+            elem.onclick = function(){
+                elem.style.display = 'none';
+
+                if(elem.name == 'norm'){
+                    score = score + 1;
+                    score1.innerHTML = score;
+                }else if(elem.name == 'good'){
+                    score = score + 2;
+                    score1.innerHTML = score;
+                }else if(elem.name == 'bad'){
+                    score = score - 2;
+                    score1.innerHTML = score;
+                }
+
+                if(score < -6){
+                    clearInterval(int1);
+                    alert('CAUTION! THIRD TRUMPET');
+                } 
+            }
+        }
+
+        
+        function finish(){
+            clearInterval(int1);
+            alert('День завершён');
+        }
+
+
+    </script>
+</body>
+</html>
